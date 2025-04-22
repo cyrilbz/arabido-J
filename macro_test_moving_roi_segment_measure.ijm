@@ -5,12 +5,12 @@ run("Close All"); // close everything
 //roiManager("reset");
 
 // Import all REGISTERED images 
-File.openSequence("C:/Documents/traitement_image/Arabido_Boris/registered_stack/", " filter=registered");
+File.openSequence("/home/cbozonnet/Documents/image_processing/arabidopsis_boris/registered/", " filter=clermont");
 rename("RegiStack");
 numberOfSlices = nSlices;
 w = getWidth();
 h = getHeight();
-s = 4 ; // choice of slice
+s = 2 ; // choice of slice
 selectWindow("RegiStack");
 setSlice(s); // select only one image
 
