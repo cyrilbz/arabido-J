@@ -27,7 +27,7 @@ ypoints_2plot = newArray(510,510,1200,1200); // starting y locations for landmar
 
 // Get list of files in the directory
 fileList = getFileList(inputDir);
-nfiles = 1 ; //fileList.length ; 
+nfiles = fileList.length ; 
 // Adjust selections manually for each image
 for(s = 0; s < nfiles; s++) {
   open(inputDir + fileList[s]);

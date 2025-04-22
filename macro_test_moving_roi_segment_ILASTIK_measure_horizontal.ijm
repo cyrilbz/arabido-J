@@ -18,7 +18,7 @@ run("Configure ilastik executable location",
 ilastik_model = "/home/cbozonnet/Documents/image_processing/arabidopsis_boris/arabido-J/ilastik_models/lesvos.ilp" ;
 
 // set-up cleaning options (if false, most images are kept open to check segmentation validity)
-clean_stuff = false;
+clean_stuff = true;
 
 // Import all REGISTERED images 
 inputDir = getDirectory("Select input folder of REGISTERED images");
