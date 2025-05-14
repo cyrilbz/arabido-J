@@ -11,14 +11,16 @@ run("Close All"); // close everything
 roiManager("reset");
 
 // configure Ilastik path
+//run("Configure ilastik executable location"); //, 
 run("Configure ilastik executable location", 
 "executablefile=/home/cbozonnet/Documents/image_processing/ilastik-1.4.1rc2-Linux/run_ilastik.sh numthreads=-1 maxrammb=4096");
 
 // choose Ilastik model
-ilastik_model = "/home/cbozonnet/Documents/image_processing/arabidopsis_boris/arabido-J/ilastik_models/lesvos.ilp" ;
+ilastik_model = File.openDialog("Select ILASTIK model to use (Clermont, Lesvos, ...) ");
+//ilastik_model = "/home/cbozonnet/Documents/image_processing/arabidopsis_boris/arabido-J/ilastik_models/clermont.ilp" ;
 
 // set-up cleaning options (if false, most images are kept open to check segmentation validity)
-clean_stuff = true;
+clean_stuff = false ;
 
 // Import all REGISTERED images 
 inputDir = getDirectory("Select input folder of REGISTERED images");
@@ -40,8 +42,10 @@ var min, max; // global variables to help threshold a labelled image
 for(s = 1; s <= numberOfSlices; s++) {
 	//s = 1 ; // choice of slice
 	selectWindow("RegiStack");
-	if (clean_stuff) {close("\\Others")}; // close all images except the current one
-
+	if (clean_stuff) {
+		close("\\Others");
+		};// close all images except the current one
+		
 	setSlice(s); // select only slice
 	sliceName = getMetadata("Label") ; //get slice name (original file name)
 	  
@@ -49,7 +53,7 @@ for(s = 1; s <= numberOfSlices; s++) {
 	run("Duplicate...", "title=tmp");
 	
 	// filter the image
-	run("Non-local Means Denoising", "sigma=15 smoothing_factor=1 auto slice");
+	//run("Non-local Means Denoising", "sigma=15 smoothing_factor=1 auto slice");
 	
 	// run pixel classification using Ilastik's trained model
 	run("Run Pixel Classification Prediction", "projectfilename=" + ilastik_model +" inputimage=tmp pixelclassificationtype=Segmentation");
@@ -72,7 +76,7 @@ for(s = 1; s <= numberOfSlices; s++) {
 	
 	// then label the connected components and filter the small objects
 	run("Connected Components Labeling", "connectivity=4 type=[16 bits]");
-	run("Label Size Filtering", "operation=Greater_Than size=1000");
+	run("Label Size Filtering", "operation=Greater_Than size=200");
 	
 	// Get display range and turn the image back to binary
 	getMinAndMax(min, max);
@@ -109,7 +113,9 @@ for(s = 1; s <= numberOfSlices; s++) {
 	}
 }
 // clean everything
-if (clean_stuff) {run("Close All")}; // close everything
+if (clean_stuff) {
+	run("Close All");
+	}; // close everything
 roiManager("reset");
 
 // Select the "Summary" table
@@ -119,4 +125,6 @@ selectWindow("Summary");
 saveAs("results");
 
 // end-up by cleaning the results table
-if (clean_stuff)  {run("Clear Results")} ;
+if (clean_stuff)  {
+	run("Clear Results");
+	} ;
