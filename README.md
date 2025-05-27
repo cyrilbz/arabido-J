@@ -11,7 +11,7 @@ Registration_trays.ijm : imageJ macro for semi-automatic registration of plant t
 
 segmentation_analyze_pots.ijm : imageJ macro for plant segmentation and pot by pot analysis. Requires the Ilastik software (https://www.ilastik.org/) and the ilastik & MorpholibJ ImageJ plugins (add update sites: ilastik, IJPB-plugins).
 
-arabido_analysis.py: Python code to analyse the results of the .csv file. Requires the Matplotlib and Pandas librairies.
+arabido_analysis.py: Python code to analyse the results of the .csv file (output from the segmentation macro). Requires the Matplotlib and Pandas librairies.
 
 
 ![Screenshot](result.png)
