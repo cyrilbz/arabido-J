@@ -3,7 +3,7 @@
 // Registration macro from Guenter Pudmich on image.sc forum :
 // https://forum.image.sc/t/registration-images-of-multiple-plant-pots/110341
 // Main author: Cyril Bozonnet (INRAE, cyril.bozonnet@inrae.fr)
-
+requires("1.54p");
 run("Close All"); // close everything
 roiManager("reset");
 

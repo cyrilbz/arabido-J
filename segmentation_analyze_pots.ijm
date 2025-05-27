@@ -6,8 +6,8 @@
 // And run!
 // Author : cyril.bozonnet@inrae.fr
 /////////////////////////////////////////////////////////////////////
+requires("1.54p");
 run("Close All"); // close everything
-
 roiManager("reset");
 
 // configure Ilastik path
