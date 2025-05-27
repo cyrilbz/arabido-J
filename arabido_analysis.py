@@ -84,10 +84,7 @@ else:
         axs[i + 2].set_yticks([])
         axs[i + 2].set_ylim(0, 1)
         axs[i + 2].text(0.05, 0.95, f'{pot}', transform=axs[i + 2].transAxes, fontsize=16, verticalalignment='top')
-        
-    # Remove any unused subplots
-    for j in range(i + 3, len(axs)):
-        axs[j].axis('off')
+
 
     # Adjust layout
     # Add a title to the entire figure
