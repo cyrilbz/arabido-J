@@ -1,5 +1,7 @@
 # arabido-J
 See the .pdf file in the repository for detailed documentation and guidelines.
+![Screenshot](results_deepL.png)
+
 ## version 2 (Nov 25)
 Updates: added the deeplearning version of the IJ macro (segmentation_analyze_pots.ijm). It uses DeepImageJ and a custom residualUnet deeplearning network created using BiaPy. 
 
