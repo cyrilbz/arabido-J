@@ -1,14 +1,17 @@
 /////////////////////////////////////////////////////////////////////
-// Macro for arabidopsis segmentation and pot by pot measurements
-// version 2: using DeepLearning for segmentation!
+// Macro for plant trays segmentation and pot by pot measurements
+// version 2: using DeepLearning for pot by pot segmentation! (trained on arabidopsis)
 // Must be done on registered images
 // The DeepImageJ model must have been installed manually first
-// And run!
 // Author : cyril.bozonnet@inrae.fr
 /////////////////////////////////////////////////////////////////////
 requires("1.54p");
 run("Close All"); // close everything
+t0 = getTime();
+
 roiManager("reset");
+
+plot_edges = false ; //if true: red edges are plotted as overlay, if false: the overlay is filled up
 
 // Close Summary table if it exists
 if (isOpen("Summary")) {
@@ -19,7 +22,7 @@ if (isOpen("Summary")) {
 // Import all REGISTERED images 
 inputDir = getDirectory("Select input folder of REGISTERED images");
 File.openSequence(inputDir, " filter=");
-rename("RegiStack");
+rename("RegiStack"); // for REGIstered STACK
 numberOfSlices = nSlices;
 
 // setup informations for the travelling square
@@ -32,13 +35,11 @@ yoffset = 12 ; // y offset (found manually)
 
 // Create a duplicate stack for overlays
 selectWindow("RegiStack");
-run("Duplicate...", "duplicate");
-rename("RegiStack_with_contours");
 
 // slice selection
 for(s = 1; s <= numberOfSlices; s++) {
-	//s = 1 ; // choice of slice
 	selectWindow("RegiStack");
+	setBatchMode("show");
 		
 	setSlice(s); // select only slice
 	sliceName = getMetadata("Label") ; //get slice name (original file name)
@@ -48,16 +49,17 @@ for(s = 1; s <= numberOfSlices; s++) {
 	
 	// Create an image to accumulate all contours for the current slice
 	newImage("Contours_Overlay", "8-bit black", getWidth(), getHeight(), 1);
+	setBatchMode("show");
 	  
 	// select image to process
 	selectImage("tmp");
+	setBatchMode("show");
 		
 	// set up measurements
 	run("Set Measurements...", "area area_fraction display redirect=None decimal=3");
 	
 	ROInumber = 0 ; // initialize ROI number value
 	// create the loop
-	//// nline=1;nrow=4; // for debugging
 	for (line=0 ; line<nline ; line++) {
 		for (row=0 ; row <nrow;row++) {
 			// calculate ROI position
@@ -72,30 +74,31 @@ for(s = 1; s <= numberOfSlices; s++) {
 			run("Duplicate...", "title=ROI_" + ROInumber);
 			
 			// run segmentation using DeepImageJ
-			run("DeepImageJ Run", "model_path=arabidoJ-4loc_19112025_151028");
-			wait(100); // wait a little so the active window is the ouput from DeepIJ!
-			rename("segmentation");
+			run("DeepImageJ Run", "model_path=arabidoJ-corrected");
+			wait(100);
+			rename("output");
 			
 			// threshold the result to get a binary image
+			run("32-bit"); //force 32-bit: safer in BatchMode
 			setAutoThreshold("Default dark no-reset");
 			setOption("BlackBackground", true);
 			run("Convert to Mask");
-			run("Make Binary");
-			
+					
 			// add some morphological operation to remove noise
 			run("Morphological Filters", "operation=Opening element=Square radius=1"); // remove bright spots
 			rename("opening");
+			close("output");
 			run("Morphological Filters", "operation=Closing element=Square radius=1");
 			rename(sliceName);
 			close("opening");
-			close("segmentation");
-	
+			
 			// perform measurements
+			selectImage(sliceName);
  			run("Analyze Particles...", "size=0-Infinity circularity=0.00-1.00 show=Nothing display summarize");
 			Table.set("Pot number",ROInumber-1+nline*nrow*(s-1),ROInumber,"Summary");
 				
-	        // Optional: Transfer ROIs back to original image with offset
-	        run("Find Edges");
+	        // Transfer ROIs back to original image with offset
+	        if (plot_edges==true) run("Find Edges");
 	        rename("edges");
 	        run("Select All");
 	        run("Copy");
@@ -106,10 +109,10 @@ for(s = 1; s <= numberOfSlices; s++) {
 			// clean & prepare for next iteration
 			close("edges");
 			close("ROI_" + ROInumber);
-			selectImage("tmp");			
+			selectImage("tmp");						
 		} //end rows
 	} //end lines
-	// Convert contours buffer to red
+	// Convert overlay to red
 	selectWindow("Contours_Overlay");
 	run("Red");
 
@@ -120,7 +123,7 @@ for(s = 1; s <= numberOfSlices; s++) {
 	selectWindow("tmp");
 	run("Select All");
 	run("Copy");
-	selectWindow("RegiStack_with_contours");
+	selectWindow("RegiStack");
 	setSlice(s);
 	run("Paste");
 
@@ -129,12 +132,18 @@ for(s = 1; s <= numberOfSlices; s++) {
 	close("tmp");
 } // end slices
 
+//show original stack with overlay
+selectWindow("RegiStack");
+rename("RegiStack_with_contours");
+
+print("elapsed time is : " +(getTime()-t0)/1000+"seconds");
+
+//close results table
+selectWindow("Results");
+run("Close");
+
 // Select the "Summary" table
 selectWindow("Summary");
 wait(100);
 // Open the save dialog box
 saveAs("results");
-
-//close results table
-selectWindow("Results");
-run("Close");
