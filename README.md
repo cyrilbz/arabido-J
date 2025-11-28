@@ -1,5 +1,5 @@
 # arabido-J
-The objective of this repository is to provide solutions for the analysis of (Arabidopsis) plant trays. It has not been tested on other species but it could provide a good basis! We provide two tools: one for plant trays registration (semi-automatic), and two for plant segmentation (one using Ilastik, one using a custom deep learning model). Below is an example of a result using the deeplearning solution, where the plants are highlighted in red. The screenshot also show the log window showing the computational time for a single tray (2 minutes on CPU) and the "Summary" window for the results. 
+The objective of this repository is to provide solutions for the analysis of (Arabidopsis) plant trays. It has not been tested on other species but it could provide a good basis! We provide two tools: one for plant trays registration (semi-automatic), and two for plant segmentation (one using Ilastik, one using a custom deep learning model). Below is an example of a result using the deeplearning solution, where the plants are highlighted in red. The screenshot also shows the log window displaying the computational time for a single tray (2 minutes on CPU) and the "Summary" window for the results. 
 
 ![Screenshot](results_deepL.png)
 
