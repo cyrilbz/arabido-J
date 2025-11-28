@@ -3,9 +3,9 @@ See the .pdf file in the repository for detailed documentation and guidelines.
 ## version 2 (Nov 25)
 Updates: added the deeplearning version of the IJ macro (segmentation_analyze_pots.ijm). It uses DeepImageJ and a custom residualUnet deeplearning network created using BiaPy. 
 
-It does not require anymore a specific training with Ilastik. It has been trained on 4 experimental data sites (80 images in the training set, 20 per sites) so it might not be perfect! Help with traing data generation would be appreciated to make it better!
+It does not require anymore a specific training with Ilastik. It has been trained on 4 experimental data sites (100 images (pots) in the training set) so it might not be perfect! Help with traing data generation would be appreciated to make it better!
 
-It does require DeepImageJ as ImageJ plugin. it will run on CPU except if you manage to follow the exact GPU guidelines for DeepImageJ (github.com/deepimagej/deepimagej-plugin/wiki/GPU-connection).
+It does require DeepImageJ as ImageJ plugin. It will run on CPU except if you manage to follow the exact GPU guidelines for DeepImageJ (github.com/deepimagej/deepimagej-plugin/wiki/GPU-connection).
 
 ## version 1
 Two tools to study plant trays. An example image below:
