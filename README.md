@@ -17,7 +17,7 @@ It does require DeepImageJ as ImageJ plugin. It will run on CPU except if you ma
 I also added the pot_cropping.ijm macro to crop the plant trays pot by pot in order to generate raw training data for the segmentation model.
 
 ### Does it generalizes well?
-The model has only been trained on trays of Arabidopsis seen from above, with black pots. Here below I tested it on some plant trays pictures found on the web. It does work quite well, although with some errors, showing that it could be fine-tuned for your case. The BMZ model can be reimported into BiaPy so you can fine-tune it on your own data with no coding required.
+The model has only been trained on pots of Arabidopsis trays seen from above, with black pots. Here below I tested it on some plant trays pictures (without any croping at the pot scale) found on the web. It does work quite well, although with some errors, showing that it could be fine-tuned for your case. The BMZ model can be reimported into BiaPy so you can fine-tune it on your own data with no coding required.
 
 ![Screenshot](test_generalization.png)
 
