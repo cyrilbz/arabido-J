@@ -1,9 +1,12 @@
 # arabido-J
-See the .pdf file in the repository for detailed documentation and guidelines.
+The objective of this repository is to provide solutions for the analysis of (Arabidopsis) plant trays. It has not been tested on other species but it could provide a good basis! We provide two tools: one for plant trays registration (semi-automatic), and two for plant segmentation (one using Ilastik, one using a custom deep learning model). Below is an example of a result using the deeplearning solution, where the plants are highlighted in red. The screenshot also show the log window showing the computational time for a single tray (2 minutes on CPU) and the "Summary" window for the results. 
+
 ![Screenshot](results_deepL.png)
 
+See the .pdf file in the repository for detailed documentation and guidelines.
+
 ## version 2 (Nov 25)
-Updates: added the deeplearning version of the IJ macro (segmentation_analyze_pots.ijm). It uses DeepImageJ and a custom residualUnet deeplearning network created using BiaPy. 
+Updates: added the deeplearning version of the IJ macro (segmentation_analyze_pots_deeplearning.ijm). It uses DeepImageJ and a custom residualUnet deeplearning network created using BiaPy. 
 
 It does not require anymore a specific training with Ilastik. It has been trained on 4 experimental data sites (100 images (pots) in the training set) so it might not be perfect! Help with traing data generation would be appreciated to make it better!
 
