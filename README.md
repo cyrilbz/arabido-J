@@ -12,6 +12,8 @@ It does not require anymore a specific training with Ilastik. It has been traine
 
 It does require DeepImageJ as ImageJ plugin. It will run on CPU except if you manage to follow the exact GPU guidelines for DeepImageJ (github.com/deepimagej/deepimagej-plugin/wiki/GPU-connection).
 
+I also added the pot_cropping.ijm macro to crop the plant trays pot by pot in order to generate raw training data for the segmentation model.
+
 ## version 1
 Two tools to study plant trays. An example image below:
 
